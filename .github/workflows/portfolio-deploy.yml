@@ -3,8 +3,6 @@ name: portfolio
 on:
   push:
     branches: [main]
-    paths:
-      - '**/*.html'
       
 permissions: 
   pages: write
