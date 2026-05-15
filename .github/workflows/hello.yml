@@ -4,6 +4,9 @@ name: hello!!
 on:
   push:
     branches: [main]
+ # only trigger when any changes occur in html file!!
+    paths:
+      - '**.html'
 
 # These are jobs inside workflow!!
 jobs:
@@ -18,6 +21,7 @@ jobs:
         run: echo "hello $USER"
 
   details:
+    needs: [greet]
     runs-on: ubuntu-latest
     steps:
       - name: show that versions of python && docker!!
