@@ -2,41 +2,63 @@ const http = require("node:http");
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
-const mongoose = require("mongoose");
+
+let mongoose;
+
+try {
+	mongoose = require("mongoose");
+} catch (_error) {
+	mongoose = null;
+}
 
 const PORT = process.env.PORT || 3000;
 
 const APP_ROOT = path.resolve(__dirname, "..");
 const PUBLIC_DIR = path.join(APP_ROOT, "frontend");
+const ORDERS_FILE = path.join(APP_ROOT, "mongodb", "seed", "orders.json");
 
 /* ---------------- MongoDB Connection ---------------- */
 
-mongoose
-	.connect(
-		process.env.MONGO_URI ||
-			"mongodb://admin:pass123@mongodb:27017/mydatabase?authSource=admin",
-	)
-	.then(() => console.log("MongoDB Connected"))
-	.catch((err) => console.log(err));
+let Order = null;
+let mongoReady = false;
 
-/* ---------------- MongoDB Schema ---------------- */
+if (mongoose) {
+	mongoose.set("bufferCommands", false);
 
-const OrderSchema = new mongoose.Schema({
-	id: String,
-	status: String,
-	createdAt: String,
-	customer: {
-		name: String,
-		phone: String,
-		address: String,
-	},
-	items: Array,
-	subtotal: Number,
-	delivery: Number,
-	total: Number,
-});
+	const OrderSchema = new mongoose.Schema({
+		id: String,
+		status: String,
+		createdAt: String,
+		customer: {
+			name: String,
+			phone: String,
+			address: String,
+		},
+		items: Array,
+		subtotal: Number,
+		delivery: Number,
+		total: Number,
+	});
 
-const Order = mongoose.model("Order", OrderSchema);
+	Order = mongoose.model("Order", OrderSchema);
+
+	mongoose
+		.connect(
+			process.env.MONGO_URI ||
+				"mongodb://admin:pass123@mongodb:27017/mydatabase?authSource=admin",
+			{ serverSelectionTimeoutMS: 1600 },
+		)
+		.then(() => {
+			mongoReady = true;
+			console.log("MongoDB connected");
+		})
+		.catch((error) => {
+			mongoReady = false;
+			console.log(`Using local order storage: ${error.message}`);
+		});
+} else {
+	console.log("Using local order storage: mongoose is not installed");
+}
 
 /* ---------------- Menu Data ---------------- */
 
@@ -74,6 +96,72 @@ const menu = [
 		image:
 			"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
 	},
+	{
+		id: 4,
+		name: "Classic Cheeseburger",
+		category: "Burgers",
+		price: 249,
+		time: "22 min",
+		rating: "4.6",
+		desc: "Grilled patty, cheddar, lettuce, tomato, pickles, and house sauce.",
+		image:
+			"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+	},
+	{
+		id: 5,
+		name: "Veg Hakka Noodles",
+		category: "Chinese",
+		price: 199,
+		time: "20 min",
+		rating: "4.5",
+		desc: "Wok-tossed noodles with peppers, cabbage, spring onion, and soy.",
+		image:
+			"https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=800&q=80",
+	},
+	{
+		id: 6,
+		name: "Chocolate Brownie Sundae",
+		category: "Desserts",
+		price: 149,
+		time: "14 min",
+		rating: "4.8",
+		desc: "Warm brownie, vanilla ice cream, chocolate sauce, and nuts.",
+		image:
+			"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80",
+	},
+	{
+		id: 7,
+		name: "Butter Chicken Bowl",
+		category: "Indian",
+		price: 319,
+		time: "26 min",
+		rating: "4.9",
+		desc: "Creamy butter chicken, jeera rice, pickled onions, and chutney.",
+		image:
+			"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
+	},
+	{
+		id: 8,
+		name: "Cold Coffee Shake",
+		category: "Drinks",
+		price: 129,
+		time: "10 min",
+		rating: "4.7",
+		desc: "Chilled coffee blended with milk, ice cream, and chocolate.",
+		image:
+			"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80",
+	},
+	{
+		id: 9,
+		name: "Loaded Masala Fries",
+		category: "Snacks",
+		price: 159,
+		time: "16 min",
+		rating: "4.6",
+		desc: "Crisp fries topped with masala, cheese sauce, herbs, and onions.",
+		image:
+			"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
+	},
 ];
 
 /* ---------------- MIME Types ---------------- */
@@ -109,6 +197,61 @@ async function readBody(req) {
 	const raw = Buffer.concat(chunks).toString("utf8");
 
 	return raw ? JSON.parse(raw) : {};
+}
+
+async function readLocalOrders() {
+	try {
+		const raw = await fs.readFile(ORDERS_FILE, "utf8");
+		const orders = JSON.parse(raw);
+
+		return Array.isArray(orders) ? orders : [];
+	} catch (error) {
+		if (error.code === "ENOENT") {
+			return [];
+		}
+
+		throw error;
+	}
+}
+
+async function writeLocalOrders(orders) {
+	await fs.mkdir(path.dirname(ORDERS_FILE), { recursive: true });
+	await fs.writeFile(ORDERS_FILE, `${JSON.stringify(orders, null, "\t")}\n`);
+}
+
+function sortOrders(orders) {
+	return [...orders].sort(
+		(first, second) => new Date(second.createdAt) - new Date(first.createdAt),
+	);
+}
+
+async function getOrders() {
+	if (mongoReady && Order) {
+		try {
+			return await Order.find().sort({ createdAt: -1 }).lean();
+		} catch (error) {
+			mongoReady = false;
+			console.log(`Falling back to local orders: ${error.message}`);
+		}
+	}
+
+	return sortOrders(await readLocalOrders());
+}
+
+async function saveOrder(orderData) {
+	if (mongoReady && Order) {
+		try {
+			return await Order.create(orderData);
+		} catch (error) {
+			mongoReady = false;
+			console.log(`Saving order locally: ${error.message}`);
+		}
+	}
+
+	const orders = await readLocalOrders();
+	const nextOrders = [orderData, ...orders];
+	await writeLocalOrders(nextOrders);
+	return orderData;
 }
 
 /* ---------------- Order Builder ---------------- */
@@ -226,9 +369,7 @@ async function router(req, res) {
 		/* GET ORDERS */
 
 		if (req.method === "GET" && url.pathname === "/api/orders") {
-			const orders = await Order.find().sort({
-				createdAt: -1,
-			});
+			const orders = await getOrders();
 
 			sendJson(res, 200, { orders });
 
@@ -248,7 +389,7 @@ async function router(req, res) {
 				return;
 			}
 
-			const savedOrder = await Order.create(orderData);
+			const savedOrder = await saveOrder(orderData);
 
 			sendJson(res, 201, {
 				order: savedOrder,

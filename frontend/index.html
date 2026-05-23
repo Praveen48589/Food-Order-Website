@@ -263,14 +263,517 @@
             class="secondary"
             id="openAccount"
           >
-            My account
-          </button>
+          My account
+        </button>
 
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <strong>Tonight's best sellers</strong>
+        <span>Fresh biryani, pizza, wraps, and local favorites.</span>
+      </div>
+    </section>
+
+    <section class="service-strip" aria-label="Food services">
+      <button
+        type="button"
+        data-target="menu"
+      >
+        Menu
+      </button>
+
+      <button
+        type="button"
+        id="ordersButton"
+      >
+        Orders
+      </button>
+
+      <button
+        type="button"
+        data-target="accountSection"
+      >
+        Profile
+      </button>
+
+      <button
+        type="button"
+        data-target="menu"
+      >
+        Offers
+      </button>
+
+      <button
+        type="button"
+        data-target="menu"
+      >
+        Fast food
+      </button>
+
+      <button
+        type="button"
+        data-target="menu"
+      >
+        Desserts
+      </button>
+    </section>
+
+    <section class="stats" aria-label="Delivery highlights">
+      <div class="stat">
+        <strong id="dishCount">0</strong>
+        <span>Dishes loaded</span>
+      </div>
+
+      <div class="stat">
+        <strong>18 min</strong>
+        <span>Fastest delivery</span>
+      </div>
+
+      <div class="stat">
+        <strong>&#8377;799</strong>
+        <span>Free delivery</span>
+      </div>
+
+      <div class="stat">
+        <strong>4.8</strong>
+        <span>Average rating</span>
+      </div>
+    </section>
+
+    <section
+      class="account-panel"
+      id="accountSection"
+    >
+      <div class="panel-head">
+        <div>
+          <h2>Account</h2>
+          <p id="accountStatus">Login to save your profile</p>
+        </div>
+
+        <button
+          type="button"
+          class="small-button"
+          id="accountEditButton"
+        >
+          Edit profile
+        </button>
+      </div>
+
+      <div class="account-grid">
+        <div class="account-summary">
+          <div>
+            <span>Name</span>
+            <strong id="profileName">Guest</strong>
+          </div>
+
+          <div>
+            <span>Phone</span>
+            <strong id="profilePhone">Not added</strong>
+          </div>
+
+          <div>
+            <span>Email</span>
+            <strong id="profileEmail">Not added</strong>
+          </div>
+        </div>
+
+        <div class="account-summary">
+          <div>
+            <span>Saved benefits</span>
+            <strong>Faster checkout</strong>
+          </div>
+
+          <div>
+            <span>Delivery</span>
+            <strong>Free over &#8377;799</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="layout"
+      id="menu"
+    >
+      <div>
+        <div class="section-head">
+          <div>
+            <h2>Order food</h2>
+            <p>Pick from today&apos;s menu and add items to your cart.</p>
+          </div>
+
+          <button
+            type="button"
+            class="small-button"
+            id="ordersInlineButton"
+          >
+            View orders
+          </button>
+        </div>
+
+        <div
+          class="categories"
+          id="categories"
+          aria-label="Menu categories"
+        ></div>
+
+        <div
+          class="menu-grid"
+          id="menuGrid"
+        >
+          <p class="empty">Loading menu...</p>
         </div>
       </div>
     </section>
 
   </main>
+
+  <div
+    class="account-modal"
+    id="accountModal"
+    aria-hidden="true"
+  >
+    <section
+      class="account-panel"
+      id="accountPanel"
+      aria-label="Account details"
+    >
+      <button
+        type="button"
+        class="modal-close"
+        id="closeAccountModal"
+        aria-label="Close account"
+      >
+        &times;
+      </button>
+
+      <div class="panel-head">
+        <div>
+          <h2>My account</h2>
+          <p>Profile and personal orders.</p>
+        </div>
+      </div>
+
+      <div class="account-grid">
+        <form
+          class="profile-form"
+          id="loginForm"
+        >
+          <div class="photo-picker">
+            <div
+              class="profile-photo"
+              id="profilePhoto"
+            >
+              A
+            </div>
+
+            <label class="photo-action">
+              Change photo
+
+              <input
+                id="profilePhotoInput"
+                type="file"
+                accept="image/*"
+              />
+            </label>
+          </div>
+
+          <label>
+            Full name
+
+            <input
+              id="loginName"
+              required
+              placeholder="Your name"
+            />
+          </label>
+
+          <label>
+            Phone
+
+            <input
+              id="loginPhone"
+              required
+              placeholder="9876543210"
+            />
+          </label>
+
+          <label>
+            Email
+
+            <input
+              id="loginEmail"
+              type="email"
+              placeholder="you@example.com"
+            />
+          </label>
+
+          <button
+            type="submit"
+            class="checkout"
+          >
+            Save profile
+          </button>
+
+          <button
+            type="button"
+            class="clear-cart"
+            id="logoutButton"
+          >
+            Logout
+          </button>
+        </form>
+
+        <div class="account-summary">
+          <div>
+            <span>Name</span>
+            <strong id="profileNameModal">Saved profile</strong>
+          </div>
+
+          <div>
+            <span>Orders</span>
+            <strong>Matched by name or phone</strong>
+          </div>
+
+          <button
+            type="button"
+            class="small-button"
+            id="refreshMyOrders"
+          >
+            Refresh orders
+          </button>
+        </div>
+      </div>
+
+      <div class="orders-head panel-head">
+        <div>
+          <h2>My orders</h2>
+          <p>Recent orders for this account.</p>
+        </div>
+      </div>
+
+      <div
+        class="orders-list"
+        id="myOrdersList"
+      ></div>
+    </section>
+  </div>
+
+  <div
+    class="cart-modal"
+    id="cartModal"
+    aria-hidden="true"
+  >
+    <aside
+      class="cart"
+      aria-label="Shopping cart"
+    >
+      <button
+        type="button"
+        class="modal-close"
+        id="closeCartModal"
+        aria-label="Close cart"
+      >
+        &times;
+      </button>
+
+      <div class="cart-head">
+        <div>
+          <h2>Your cart</h2>
+          <span id="itemLabel">0 items</span>
+        </div>
+      </div>
+
+      <div
+        class="cart-items"
+        id="cartItems"
+      ></div>
+
+      <form
+        class="customer-form"
+        id="orderForm"
+      >
+        <label>
+          Name
+
+          <input
+            id="customerName"
+            required
+            placeholder="Delivery name"
+          />
+        </label>
+
+        <label>
+          Phone
+
+          <input
+            id="customerPhone"
+            required
+            placeholder="9876543210"
+          />
+        </label>
+
+        <label>
+          Address
+
+          <input
+            id="customerAddress"
+            required
+            placeholder="House, street, area"
+          />
+        </label>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="subtotal">&#8377;0</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Delivery</span>
+          <strong id="delivery">Free</strong>
+        </div>
+
+        <div class="summary-row total">
+          <span>Total</span>
+          <strong id="total">&#8377;0</strong>
+        </div>
+
+        <button
+          type="submit"
+          class="checkout"
+        >
+          Place order
+        </button>
+
+        <button
+          type="button"
+          class="clear-cart"
+          id="clearCart"
+        >
+          Clear cart
+        </button>
+      </form>
+    </aside>
+  </div>
+
+  <div
+    class="orders-modal"
+    id="ordersModal"
+    aria-hidden="true"
+  >
+    <section
+      class="orders-drawer"
+      aria-label="All orders"
+    >
+      <button
+        type="button"
+        class="modal-close"
+        id="closeOrdersModal"
+        aria-label="Close orders"
+      >
+        &times;
+      </button>
+
+      <div class="panel-head">
+        <div>
+          <h2>Orders</h2>
+          <p>All received orders from the kitchen queue.</p>
+        </div>
+
+        <button
+          type="button"
+          class="small-button"
+          id="refreshOrders"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div
+        class="orders-list"
+        id="ordersList"
+      ></div>
+    </section>
+  </div>
+
+  <div
+    class="buy-modal"
+    id="buyModal"
+    aria-hidden="true"
+  >
+    <section
+      class="buy-dialog"
+      aria-label="Buy now checkout"
+    >
+      <button
+        type="button"
+        class="modal-close"
+        id="closeBuyModal"
+        aria-label="Close buy now"
+      >
+        &times;
+      </button>
+
+      <div
+        class="buy-summary"
+        id="buySummary"
+      ></div>
+
+      <form
+        class="buy-form"
+        id="buyForm"
+      >
+        <h2>Complete order</h2>
+
+        <label>
+          Name
+
+          <input
+            id="buyName"
+            required
+            placeholder="Delivery name"
+          />
+        </label>
+
+        <label>
+          Phone
+
+          <input
+            id="buyPhone"
+            required
+            placeholder="9876543210"
+          />
+        </label>
+
+        <label>
+          Address
+
+          <input
+            id="buyAddress"
+            required
+            placeholder="House, street, area"
+          />
+        </label>
+
+        <label>
+          Note
+
+          <input
+            id="buyNote"
+            placeholder="Landmark or delivery note"
+          />
+        </label>
+
+        <button
+          type="submit"
+          class="checkout"
+        >
+          Place order
+        </button>
+      </form>
+    </section>
+  </div>
 
   <div
     class="toast"

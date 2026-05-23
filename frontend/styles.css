@@ -168,6 +168,7 @@ header {
 	place-items: center;
 	background-size: cover;
 	background-position: center;
+	background-repeat: no-repeat;
 	font-size: 12px;
 	font-weight: 900;
 }
@@ -365,6 +366,7 @@ h2 {
 	place-items: center;
 	background-size: cover;
 	background-position: center;
+	background-repeat: no-repeat;
 	border: 4px solid #edf8f2;
 	font-size: 30px;
 	font-weight: 900;
@@ -986,7 +988,7 @@ header {
 
 .nav-avatar,
 .profile-photo {
-	background: var(--blue);
+	background-color: var(--blue);
 }
 
 main {
@@ -1393,7 +1395,7 @@ h1 {
 	width: 76px;
 	height: 76px;
 	border-color: #e8f0ff;
-	background: var(--blue);
+	background-color: var(--blue);
 }
 
 .auth-form input {
@@ -1604,7 +1606,7 @@ h1 {
 }
 
 .auth-form .profile-photo {
-	background: #fb641b;
+	background-color: #fb641b;
 	border-color: #fff0e5;
 }
 

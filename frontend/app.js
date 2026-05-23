@@ -622,9 +622,13 @@ addSafeListener("accountButton", "click", openAccount);
 
 addSafeListener("openAccount", "click", openAccount);
 
+addSafeListener("accountEditButton", "click", openAccount);
+
 addSafeListener("loadOrders", "click", openOrders);
 
 addSafeListener("ordersButton", "click", openOrders);
+
+addSafeListener("ordersInlineButton", "click", openOrders);
 
 addSafeListener("refreshOrders", "click", loadOrders);
 
