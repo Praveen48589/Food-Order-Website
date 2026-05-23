@@ -48,6 +48,9 @@ const buyName = document.getElementById("buyName");
 const buyPhone = document.getElementById("buyPhone");
 const buyAddress = document.getElementById("buyAddress");
 const buyNote = document.getElementById("buyNote");
+const customerName = document.getElementById("customerName");
+const customerPhone = document.getElementById("customerPhone");
+const customerAddress = document.getElementById("customerAddress");
 
 async function api(path, options = {}) {
 	const response = await fetch(path, {
@@ -70,6 +73,49 @@ function showToast(message) {
 	}, 2400);
 }
 
+function setText(element, value) {
+	if (element) {
+		element.textContent = value;
+	}
+}
+
+function setValue(element, value) {
+	if (element) {
+		element.value = value;
+	}
+}
+
+function getValue(element) {
+	return element?.value || "";
+}
+
+function getTrimmedValue(element) {
+	return getValue(element).trim();
+}
+
+function showModal(modal) {
+	if (!modal) return false;
+
+	modal.classList.add("show");
+	modal.setAttribute("aria-hidden", "false");
+	return true;
+}
+
+function hideModal(modal) {
+	if (!modal) return;
+
+	modal.classList.remove("show");
+	modal.setAttribute("aria-hidden", "true");
+}
+
+function scrollToSection(id, options = { behavior: "smooth", block: "start" }) {
+	const target = document.getElementById(id);
+	if (!target) return false;
+
+	target.scrollIntoView(options);
+	return true;
+}
+
 function saveProfile(nextProfile) {
 	profile = nextProfile;
 	localStorage.setItem("biterushProfile", JSON.stringify(profile));
@@ -81,6 +127,8 @@ function getInitial(name) {
 }
 
 function setPhoto(target, name) {
+	if (!target) return;
+
 	target.textContent = "";
 	target.style.backgroundImage = "";
 
@@ -93,6 +141,8 @@ function setPhoto(target, name) {
 }
 
 function setPreviewPhoto(target, photo, name) {
+	if (!target) return;
+
 	target.textContent = "";
 	target.style.backgroundImage = "";
 
@@ -115,18 +165,16 @@ function renderProfile() {
 	const phone = profile?.phone || "";
 	const email = profile?.email || "";
 
-	accountLabel.textContent = name ? "My Account" : "Login";
-	accountStatus.textContent = name
-		? "Profile saved"
-		: "Login to save your profile";
-	loginName.value = name;
-	loginPhone.value = phone;
-	loginEmail.value = email;
-	profileName.textContent = name || "Guest";
-	profilePhone.textContent = phone || "Not added";
-	profileEmail.textContent = email || "Not added";
-	document.getElementById("customerName").value = name;
-	document.getElementById("customerPhone").value = phone;
+	setText(accountLabel, name ? "My Account" : "Login");
+	setText(accountStatus, name ? "Profile saved" : "Login to save your profile");
+	setValue(loginName, name);
+	setValue(loginPhone, phone);
+	setValue(loginEmail, email);
+	setText(profileName, name || "Guest");
+	setText(profilePhone, phone || "Not added");
+	setText(profileEmail, email || "Not added");
+	setValue(customerName, name);
+	setValue(customerPhone, phone);
 	setPhoto(profilePhoto, name);
 	setPhoto(navAvatar, name);
 	updateDashboardAccess();
@@ -135,9 +183,9 @@ function renderProfile() {
 function handleLogin(event) {
 	event.preventDefault();
 	saveProfile({
-		name: loginName.value.trim(),
-		phone: loginPhone.value.trim(),
-		email: loginEmail.value.trim(),
+		name: getTrimmedValue(loginName),
+		phone: getTrimmedValue(loginPhone),
+		email: getTrimmedValue(loginEmail),
 		photo: profile?.photo || "",
 	});
 	showToast("Profile saved");
@@ -147,9 +195,9 @@ function handleLogin(event) {
 function handleAuthLogin(event) {
 	event.preventDefault();
 	saveProfile({
-		name: authName.value.trim(),
-		phone: authPhone.value.trim(),
-		email: authEmail.value.trim(),
+		name: getTrimmedValue(authName),
+		phone: getTrimmedValue(authPhone),
+		email: getTrimmedValue(authEmail),
 		photo: pendingAuthPhoto,
 	});
 	authForm.reset();
@@ -167,40 +215,44 @@ function logout() {
 	closeAccount();
 	renderProfile();
 	renderMyOrders([]);
-	authGate.scrollIntoView({ behavior: "smooth", block: "start" });
+	authGate?.scrollIntoView({ behavior: "smooth", block: "start" });
 	showToast("Logged out");
 }
 
 function openAccount() {
-	accountModal.classList.add("show");
-	accountModal.setAttribute("aria-hidden", "false");
+	if (!showModal(accountModal)) {
+		showToast("Account panel is unavailable");
+		return;
+	}
+
 	loadMyOrders();
 }
 
 function closeAccount() {
-	accountModal.classList.remove("show");
-	accountModal.setAttribute("aria-hidden", "true");
+	hideModal(accountModal);
 }
 
 function openCart() {
-	cartModal.classList.add("show");
-	cartModal.setAttribute("aria-hidden", "false");
+	if (!showModal(cartModal)) {
+		showToast("Cart panel is unavailable");
+	}
 }
 
 function closeCart() {
-	cartModal.classList.remove("show");
-	cartModal.setAttribute("aria-hidden", "true");
+	hideModal(cartModal);
 }
 
 async function openOrders() {
-	ordersModal.classList.add("show");
-	ordersModal.setAttribute("aria-hidden", "false");
+	if (!showModal(ordersModal)) {
+		showToast("Orders panel is unavailable");
+		return;
+	}
+
 	await loadOrders();
 }
 
 function closeOrders() {
-	ordersModal.classList.remove("show");
-	ordersModal.setAttribute("aria-hidden", "true");
+	hideModal(ordersModal);
 }
 
 function updateProfilePhoto(file) {
@@ -208,9 +260,9 @@ function updateProfilePhoto(file) {
 	const reader = new FileReader();
 	reader.addEventListener("load", () => {
 		saveProfile({
-			name: loginName.value.trim() || profile?.name || "Account",
-			phone: loginPhone.value.trim() || profile?.phone || "",
-			email: loginEmail.value.trim() || profile?.email || "",
+			name: getTrimmedValue(loginName) || profile?.name || "Account",
+			phone: getTrimmedValue(loginPhone) || profile?.phone || "",
+			email: getTrimmedValue(loginEmail) || profile?.email || "",
 			photo: reader.result,
 		});
 		showToast("Profile photo added");
@@ -223,16 +275,18 @@ function updateAuthPhoto(file) {
 	const reader = new FileReader();
 	reader.addEventListener("load", () => {
 		pendingAuthPhoto = reader.result;
-		setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, authName.value);
+		setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, getValue(authName));
 	});
 	reader.readAsDataURL(file);
 }
 
 async function loadMenu() {
+	if (!menuGrid || !categories) return;
+
 	try {
 		const data = await api("/api/menu");
 		dishes = data.menu;
-		dishCount.textContent = dishes.length;
+		setText(dishCount, dishes.length);
 		renderCategories();
 		renderMenu();
 	} catch (error) {
@@ -241,6 +295,8 @@ async function loadMenu() {
 }
 
 function renderCategories() {
+	if (!categories) return;
+
 	const names = ["All", ...new Set(dishes.map((dish) => dish.category))];
 	categories.innerHTML = names
 		.map(
@@ -259,7 +315,9 @@ function renderCategories() {
 }
 
 function renderMenu() {
-	const query = searchInput.value.trim().toLowerCase();
+	if (!menuGrid) return;
+
+	const query = getTrimmedValue(searchInput).toLowerCase();
 	const filtered = dishes.filter((dish) => {
 		const matchesCategory =
 			activeCategory === "All" || dish.category === activeCategory;
@@ -312,6 +370,8 @@ function renderMenu() {
 
 function addToCart(id) {
 	const dish = dishes.find((item) => item.id === id);
+	if (!dish) return;
+
 	const current = cart.get(id) || { dish, qty: 0 };
 	current.qty += 1;
 	cart.set(id, current);
@@ -322,13 +382,22 @@ function addToCart(id) {
 function openBuyNow(id) {
 	buyNowDish = dishes.find((item) => item.id === id);
 	if (!buyNowDish) return;
+	if (
+		!buyModal ||
+		!buyName ||
+		!buyPhone ||
+		!buyAddress ||
+		!buyNote ||
+		!buySummary
+	) {
+		showToast("Checkout panel is unavailable");
+		return;
+	}
 
-	buyName.value =
-		profile?.name || document.getElementById("customerName").value || "";
-	buyPhone.value =
-		profile?.phone || document.getElementById("customerPhone").value || "";
-	buyAddress.value = document.getElementById("customerAddress").value || "";
-	buyNote.value = "";
+	setValue(buyName, profile?.name || getValue(customerName));
+	setValue(buyPhone, profile?.phone || getValue(customerPhone));
+	setValue(buyAddress, getValue(customerAddress));
+	setValue(buyNote, "");
 	buySummary.innerHTML = `
     <img src="${buyNowDish.image}" alt="${buyNowDish.name}">
     <div>
@@ -337,14 +406,12 @@ function openBuyNow(id) {
       <p>${rupee(buyNowDish.price)} - ${buyNowDish.time}</p>
     </div>
   `;
-	buyModal.classList.add("show");
-	buyModal.setAttribute("aria-hidden", "false");
+	showModal(buyModal);
 	buyAddress.focus();
 }
 
 function closeBuyNow() {
-	buyModal.classList.remove("show");
-	buyModal.setAttribute("aria-hidden", "true");
+	hideModal(buyModal);
 	buyNowDish = null;
 }
 
@@ -352,13 +419,14 @@ async function placeBuyNow(event) {
 	event.preventDefault();
 	if (!buyNowDish) return;
 
-	const addressParts = [buyAddress.value.trim(), buyNote.value.trim()].filter(
-		Boolean,
-	);
+	const addressParts = [
+		getTrimmedValue(buyAddress),
+		getTrimmedValue(buyNote),
+	].filter(Boolean);
 	const payload = {
 		customer: {
-			name: buyName.value.trim(),
-			phone: buyPhone.value.trim(),
+			name: getTrimmedValue(buyName),
+			phone: getTrimmedValue(buyPhone),
 			address: addressParts.join(" - "),
 		},
 		items: [{ id: buyNowDish.id, qty: 1 }],
@@ -369,9 +437,9 @@ async function placeBuyNow(event) {
 			method: "POST",
 			body: JSON.stringify(payload),
 		});
-		document.getElementById("customerName").value = payload.customer.name;
-		document.getElementById("customerPhone").value = payload.customer.phone;
-		document.getElementById("customerAddress").value = buyAddress.value.trim();
+		setValue(customerName, payload.customer.name);
+		setValue(customerPhone, payload.customer.phone);
+		setValue(customerAddress, getTrimmedValue(buyAddress));
 		event.target.reset();
 		closeBuyNow();
 		showToast(`Order ${data.order.id} placed`);
@@ -396,11 +464,13 @@ function renderCart() {
 	const sub = items.reduce((sum, item) => sum + item.dish.price * item.qty, 0);
 	const fee = sub === 0 || sub >= 799 ? 0 : 49;
 
-	cartCount.textContent = count;
-	itemLabel.textContent = `${count} ${count === 1 ? "item" : "items"}`;
-	subtotal.textContent = rupee(sub);
-	delivery.textContent = fee === 0 ? "Free" : rupee(fee);
-	total.textContent = rupee(sub + fee);
+	setText(cartCount, count);
+	setText(itemLabel, `${count} ${count === 1 ? "item" : "items"}`);
+	setText(subtotal, rupee(sub));
+	setText(delivery, fee === 0 ? "Free" : rupee(fee));
+	setText(total, rupee(sub + fee));
+
+	if (!cartItems) return;
 
 	cartItems.innerHTML = items.length
 		? items
@@ -439,9 +509,9 @@ async function placeOrder(event) {
 
 	const payload = {
 		customer: {
-			name: document.getElementById("customerName").value,
-			phone: document.getElementById("customerPhone").value,
-			address: document.getElementById("customerAddress").value,
+			name: getValue(customerName),
+			phone: getValue(customerPhone),
+			address: getValue(customerAddress),
 		},
 		items: [...cart.values()].map((item) => ({
 			id: item.dish.id,
@@ -481,6 +551,8 @@ function renderOrderCards(orders, emptyMessage) {
 }
 
 function renderMyOrders(orders) {
+	if (!myOrdersList) return;
+
 	myOrdersList.innerHTML = renderOrderCards(
 		orders,
 		profile
@@ -490,6 +562,8 @@ function renderMyOrders(orders) {
 }
 
 async function loadMyOrders() {
+	if (!myOrdersList) return;
+
 	if (!profile?.name && !profile?.phone) {
 		renderMyOrders([]);
 		return;
@@ -514,6 +588,8 @@ async function loadMyOrders() {
 }
 
 async function loadOrders() {
+	if (!ordersList) return;
+
 	try {
 		const data = await api("/api/orders");
 		const orders = data.orders;
@@ -535,9 +611,9 @@ function addSafeListener(id, event, handler) {
 }
 
 addSafeListener("browseMenu", "click", () => {
-	document.getElementById("menu").scrollIntoView({
-		behavior: "smooth",
-	});
+	if (!scrollToSection("menu", { behavior: "smooth" })) {
+		showToast("Menu section is unavailable");
+	}
 });
 
 addSafeListener("cartButton", "click", openCart);
@@ -606,7 +682,7 @@ if (authPhotoInput) {
 
 if (authName) {
 	authName.addEventListener("input", () =>
-		setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, authName.value),
+		setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, getValue(authName)),
 	);
 }
 
@@ -638,7 +714,7 @@ document.querySelectorAll(".service-strip button").forEach((button) => {
 	button.addEventListener("click", () => {
 		if (!button.dataset.target) return;
 
-		document.getElementById(button.dataset.target).scrollIntoView({
+		scrollToSection(button.dataset.target, {
 			behavior: "smooth",
 			block: "start",
 		});
