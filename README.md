@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BiteRush Plus - Food Order Website
 
 BiteRush Plus is a full-stack food ordering web application built with a static frontend and a Node.js backend. Users can log in, browse food items, add products to cart, buy items directly, update their profile, upload a profile photo, and view order history.
@@ -91,3 +92,7 @@ POST /api/orders
 ## Author
 
 Praveen
+=======
+# DEV-SEC-OPS
+End to End dev-sec-ops pipeline
+>>>>>>> 7f7d6d5b8f33f96910622509a6ca20b072b40a28
