@@ -1,109 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>BiteRush Plus Shopping Dashboard</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css" />
 </head>
+
 <body class="auth-locked">
   <section class="auth-gate" id="authGate">
     <div class="auth-card">
+
       <div class="auth-copy">
         <div class="brand auth-brand">
           <div class="logo" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M6 3v9M10 3v9M6 7h4M17 3v18M14 3c3 2 3 7 0 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <title>Logo</title>
+
+              <path
+                d="M6 3v9M10 3v9M6 7h4M17 3v18M14 3c3 2 3 7 0 9"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
             </svg>
           </div>
+
           BiteRush Plus
         </div>
+
         <div>
           <div class="eyebrow">Premium food delivery</div>
-          <h1>Fresh meals delivered fast, from your favorite kitchens.</h1>
-          <p>Login to explore top picks, save your profile, place orders faster, and track every meal from one clean dashboard.</p>
+
+          <h1>
+            Fresh meals delivered fast, from your favorite kitchens.
+          </h1>
+
+          <p>
+            Login to explore top picks, save your profile,
+            place orders faster, and track every meal
+            from one clean dashboard.
+          </p>
         </div>
+
         <div class="auth-highlights">
           <span>Hot meals</span>
           <span>Fast checkout</span>
           <span>Live orders</span>
         </div>
       </div>
+
       <div class="auth-showcase" aria-hidden="true">
         <div class="showcase-top">
           <span>Chef's pick</span>
           <strong>Signature Dinner</strong>
         </div>
+
         <div class="showcase-dish"></div>
+
         <div class="showcase-grid">
           <span>4.9 rated</span>
           <span>18 min</span>
           <span>Fresh</span>
           <span>Offers</span>
         </div>
+
         <div class="showcase-card">
           <div></div>
+
           <section>
             <strong>Tonight's combo</strong>
             <span>Biryani, dessert, and drink</span>
           </section>
         </div>
       </div>
+
       <form class="profile-form auth-form" id="authForm">
         <div class="form-head">
           <span>Welcome to BiteRush</span>
           <strong>Start your order</strong>
         </div>
+
         <div class="photo-picker">
           <div class="profile-photo" id="authPhotoPreview">A</div>
+
           <label class="photo-action">
             Add profile photo
-            <input id="authPhotoInput" type="file" accept="image/*">
+
+            <input
+              id="authPhotoInput"
+              type="file"
+              accept="image/*"
+            />
           </label>
         </div>
+
         <label>
           Full name
-          <input id="authName" required placeholder="Your name">
+
+          <input
+            id="authName"
+            required
+            placeholder="Your name"
+          />
         </label>
+
         <label>
           Phone
-          <input id="authPhone" required placeholder="9876543210">
+
+          <input
+            id="authPhone"
+            required
+            placeholder="9876543210"
+          />
         </label>
+
         <label>
           Email
-          <input id="authEmail" type="email" placeholder="you@example.com">
+
+          <input
+            id="authEmail"
+            type="email"
+            placeholder="you@example.com"
+          />
         </label>
+
         <div class="food-note">
           <span>Free delivery over &#8377;799</span>
           <span>Fresh meals from local kitchens</span>
         </div>
-        <button class="checkout" type="submit">Login to dashboard</button>
+
+        <button
+          class="checkout"
+          type="submit"
+        >
+          Login to dashboard
+        </button>
       </form>
     </div>
   </section>
 
   <header id="appHeader">
     <nav class="nav">
+
       <div class="brand">
         <div class="logo" aria-hidden="true">
+
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 3v9M10 3v9M6 7h4M17 3v18M14 3c3 2 3 7 0 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <title>Logo</title>
+
+            <path
+              d="M6 3v9M10 3v9M6 7h4M17 3v18M14 3c3 2 3 7 0 9"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </div>
+
         BiteRush Plus
       </div>
+
       <div class="nav-actions">
-        <input class="search" id="searchInput" type="search" placeholder="Search for meals, snacks, drinks and more">
-        <button class="account-button" id="accountButton" type="button">
+
+        <input
+          class="search"
+          id="searchInput"
+          type="search"
+          placeholder="Search for meals, snacks, drinks and more"
+        />
+
+        <button
+          class="account-button"
+          id="accountButton"
+          type="button"
+        >
           <span class="nav-avatar" id="navAvatar">A</span>
           <span id="accountLabel">Login</span>
         </button>
-        <button class="cart-button icon-cart" id="cartButton" type="button" aria-label="Open cart">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 5h2l1.6 9.2a2 2 0 0 0 2 1.7h5.8a2 2 0 0 0 1.9-1.4L20 8H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="10" cy="20" r="1.4" fill="currentColor"/>
-            <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
+
+        <button
+          class="cart-button icon-cart"
+          id="cartButton"
+          type="button"
+          aria-label="Open cart"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 5h2l1.6 9.2a2 2 0 0 0 2 1.7h5.8a2 2 0 0 0 1.9-1.4L20 8H8"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <circle
+              cx="10"
+              cy="20"
+              r="1.4"
+              fill="currentColor"
+            />
+
+            <circle
+              cx="17"
+              cy="20"
+              r="1.4"
+              fill="currentColor"
+            />
           </svg>
+
           <span id="cartCount">0</span>
         </button>
       </div>
@@ -111,177 +223,55 @@
   </header>
 
   <main id="appDashboard">
+
     <section class="hero">
+
       <div class="hero-copy">
+
         <div class="eyebrow">Marketplace dashboard</div>
-        <h1>Fast ordering with account, cart, and order services.</h1>
-        <p>Browse products, add items to cart, save your profile, and track orders from a clean shopping dashboard.</p>
+
+        <h1>
+          Fast ordering with account, cart, and order services.
+        </h1>
+
+        <p>
+          Browse products, add items to cart,
+          save your profile, and track orders
+          from a clean shopping dashboard.
+        </p>
+
         <div class="hero-actions">
-          <button class="primary" id="browseMenu">Shop now</button>
-          <button class="secondary" id="loadOrders">Orders</button>
-          <button class="secondary" id="openAccount">My account</button>
+
+          <button
+            type="button"
+            class="primary"
+            id="browseMenu"
+          >
+            Shop now
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            id="loadOrders"
+          >
+            Orders
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            id="openAccount"
+          >
+            My account
+          </button>
+
         </div>
-      </div>
-      <div class="hero-photo">
-        <strong>Daily deals, quick checkout</strong>
-        <span>Food, drinks, snacks, offers, cart, profile, and order history in one dashboard.</span>
-      </div>
-    </section>
-
-    <section class="service-strip" aria-label="Shopping services">
-      <button type="button" data-target="menu">Food</button>
-      <button type="button" data-target="menu">Grocery</button>
-      <button type="button" data-target="menu">Snacks</button>
-      <button type="button" data-target="menu">Drinks</button>
-      <button type="button" id="ordersButton">Orders</button>
-    </section>
-
-    <section class="stats">
-      <div class="stat"><strong id="dishCount">0</strong><span>products live</span></div>
-      <div class="stat"><strong>30m</strong><span>quick delivery</span></div>
-      <div class="stat"><strong>Free</strong><span>delivery over &#8377;799</span></div>
-      <div class="stat"><strong>24x7</strong><span>order service</span></div>
-    </section>
-
-    <section class="section-head" id="menu">
-      <div>
-        <h2>Top Picks For You</h2>
-        <p>Choose items and place an order from the shopping cart.</p>
-      </div>
-    </section>
-
-    <div class="categories" id="categories"></div>
-
-    <section class="layout">
-      <div>
-        <div class="menu-grid" id="menuGrid"></div>
-      </div>
-
-      <div class="cart-modal" id="cartModal" aria-hidden="true">
-      <aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
-        <button class="modal-close" id="closeCartModal" type="button" aria-label="Close cart">x</button>
-        <div class="cart-head">
-          <h2 id="cartTitle">Your Cart</h2>
-          <span id="itemLabel">0 items</span>
-        </div>
-        <div class="cart-items" id="cartItems"></div>
-        <form class="customer-form" id="orderForm">
-          <label>
-            Name
-            <input id="customerName" required placeholder="Your name">
-          </label>
-          <label>
-            Phone
-            <input id="customerPhone" required placeholder="9876543210">
-          </label>
-          <label>
-            Address
-            <input id="customerAddress" required placeholder="Delivery address">
-          </label>
-          <div class="summary-row"><span>Subtotal</span><strong id="subtotal">₹0</strong></div>
-          <div class="summary-row"><span>Delivery</span><strong id="delivery">₹49</strong></div>
-          <div class="summary-row total"><span>Total</span><strong id="total">₹0</strong></div>
-          <button class="checkout" type="submit">Place order</button>
-          <button class="clear-cart" type="button" id="clearCart">Clear cart</button>
-        </form>
-      </aside>
       </div>
     </section>
 
   </main>
 
-  <div class="orders-modal" id="ordersModal" aria-hidden="true">
-    <section class="orders-drawer" role="dialog" aria-modal="true" aria-labelledby="ordersTitle">
-      <button class="modal-close" id="closeOrdersModal" type="button" aria-label="Close orders">x</button>
-      <div class="panel-head">
-        <h2 id="ordersTitle">All Orders</h2>
-        <button class="small-button" id="refreshOrders" type="button">Refresh</button>
-      </div>
-      <div id="ordersList" class="orders-list"></div>
-    </section>
-  </div>
-
-  <div class="account-modal" id="accountModal" aria-hidden="true">
-    <section class="account-panel" id="accountPanel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
-      <button class="modal-close" id="closeAccountModal" type="button" aria-label="Close account">x</button>
-      <div class="panel-head">
-        <h2 id="accountTitle">My Account</h2>
-        <span id="accountStatus">Login to save your profile</span>
-      </div>
-      <div class="account-grid">
-        <form class="profile-form" id="loginForm">
-          <div class="photo-picker">
-            <div class="profile-photo" id="profilePhoto">A</div>
-            <label class="photo-action">
-              Add profile photo
-              <input id="profilePhotoInput" type="file" accept="image/*">
-            </label>
-          </div>
-          <label>
-            Full name
-            <input id="loginName" required placeholder="Your name">
-          </label>
-          <label>
-            Phone
-            <input id="loginPhone" required placeholder="9876543210">
-          </label>
-          <label>
-            Email
-            <input id="loginEmail" type="email" placeholder="you@example.com">
-          </label>
-          <button class="checkout" type="submit">Save profile</button>
-        </form>
-        <div class="account-summary">
-          <div>
-            <span>Name</span>
-            <strong id="profileName">Guest</strong>
-          </div>
-          <div>
-            <span>Phone</span>
-            <strong id="profilePhone">Not added</strong>
-          </div>
-          <div>
-            <span>Email</span>
-            <strong id="profileEmail">Not added</strong>
-          </div>
-          <button class="clear-cart" id="logoutButton" type="button">Logout</button>
-        </div>
-      </div>
-      <div class="panel-head orders-head">
-        <h2>My Orders</h2>
-        <button class="small-button" id="refreshMyOrders" type="button">Refresh</button>
-      </div>
-      <div id="myOrdersList" class="orders-list"></div>
-    </section>
-  </div>
-
-  <div class="toast" id="toast">Added to cart</div>
-  <div class="buy-modal" id="buyModal" aria-hidden="true">
-    <div class="buy-dialog" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
-      <button class="modal-close" id="closeBuyModal" type="button" aria-label="Close buy form">x</button>
-      <div class="buy-summary" id="buySummary"></div>
-      <form class="buy-form" id="buyForm">
-        <h2 id="buyTitle">Delivery details</h2>
-        <label>
-          Name
-          <input id="buyName" required placeholder="Your name">
-        </label>
-        <label>
-          Phone
-          <input id="buyPhone" required placeholder="9876543210">
-        </label>
-        <label>
-          Address
-          <input id="buyAddress" required placeholder="House no, street, city">
-        </label>
-        <label>
-          Delivery note
-          <input id="buyNote" placeholder="Landmark or instruction">
-        </label>
-        <button class="checkout" type="submit">Confirm buy now</button>
-      </form>
-    </div>
-  </div>
   <script src="/app.js"></script>
 </body>
 </html>

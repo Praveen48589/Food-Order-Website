@@ -1,20 +1,20 @@
 {
-  "name": "fullstack-food-order",
-  "version": "1.0.0",
-  "description": "Dependency-free full stack online food ordering app.",
-  "main": "backend/server.js",
-  "scripts": {
-    "start": "node backend/server.js",
-    "dev": "node backend/server.js"
-  },
-  "keywords": [
-    "food-order",
-    "node",
-    "full-stack"
-  ],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "^2.4.15"
-  }
+	"name": "fullstack-food-order",
+	"version": "1.0.0",
+	"description": "Dependency-free full stack online food ordering app.",
+	"main": "backend/server.js",
+	"scripts": {
+		"start": "node backend/server.js",
+		"dev": "node backend/server.js"
+	},
+	"keywords": [
+		"food-order",
+		"node",
+		"full-stack"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.15"
+	}
 }

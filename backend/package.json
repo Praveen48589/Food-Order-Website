@@ -1,12 +1,12 @@
 {
-  "name": "fullstack-food-order-backend",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "dotenv": "^17.4.2",
-    "mongoose": "^9.6.2"
-  }
+	"name": "fullstack-food-order-backend",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"dotenv": "^17.4.2",
+		"mongoose": "^9.6.2"
+	}
 }
