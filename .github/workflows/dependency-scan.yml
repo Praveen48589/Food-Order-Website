@@ -1,5 +1,8 @@
 name: dependency-scan
 
+permissions:
+  contents: read
+
 on: 
     workflow_call:
 
