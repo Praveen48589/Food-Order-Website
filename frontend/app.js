@@ -514,86 +514,130 @@ async function loadOrders() {
 	}
 }
 
-function showToast(message) {
-	toast.textContent = message;
-	toast.classList.add("show");
-	setTimeout(() => toast.classList.remove("show"), 1600);
+function addSafeListener(id, event, handler) {
+	const element = document.getElementById(id);
+
+	if (element) {
+		element.addEventListener(event, handler);
+	}
 }
 
-document.getElementById("browseMenu").addEventListener("click", () => {
-	document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
+addSafeListener("browseMenu", "click", () => {
+	document.getElementById("menu").scrollIntoView({
+		behavior: "smooth",
+	});
 });
 
-document.getElementById("cartButton").addEventListener("click", () => {
-	openCart();
-});
+addSafeListener("cartButton", "click", openCart);
 
-document.getElementById("accountButton").addEventListener("click", () => {
-	openAccount();
-});
+addSafeListener("accountButton", "click", openAccount);
 
-document.getElementById("openAccount").addEventListener("click", () => {
-	openAccount();
-});
+addSafeListener("openAccount", "click", openAccount);
 
-document.getElementById("loadOrders").addEventListener("click", openOrders);
-document.getElementById("ordersButton").addEventListener("click", openOrders);
-document.getElementById("refreshOrders").addEventListener("click", loadOrders);
-document
-	.getElementById("refreshMyOrders")
-	.addEventListener("click", loadMyOrders);
-document.getElementById("loginForm").addEventListener("submit", handleLogin);
-document.getElementById("logoutButton").addEventListener("click", logout);
-document
-	.getElementById("closeAccountModal")
-	.addEventListener("click", closeAccount);
-accountModal.addEventListener("click", (event) => {
-	if (event.target === accountModal) closeAccount();
-});
-document.getElementById("closeCartModal").addEventListener("click", closeCart);
-cartModal.addEventListener("click", (event) => {
-	if (event.target === cartModal) closeCart();
-});
-document
-	.getElementById("closeOrdersModal")
-	.addEventListener("click", closeOrders);
-ordersModal.addEventListener("click", (event) => {
-	if (event.target === ordersModal) closeOrders();
-});
-profilePhotoInput.addEventListener("change", () =>
-	updateProfilePhoto(profilePhotoInput.files[0]),
-);
-authForm.addEventListener("submit", handleAuthLogin);
-authPhotoInput.addEventListener("change", () =>
-	updateAuthPhoto(authPhotoInput.files[0]),
-);
-authName.addEventListener("input", () =>
-	setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, authName.value),
-);
-document.getElementById("clearCart").addEventListener("click", () => {
+addSafeListener("loadOrders", "click", openOrders);
+
+addSafeListener("ordersButton", "click", openOrders);
+
+addSafeListener("refreshOrders", "click", loadOrders);
+
+addSafeListener("refreshMyOrders", "click", loadMyOrders);
+
+addSafeListener("loginForm", "submit", handleLogin);
+
+addSafeListener("logoutButton", "click", logout);
+
+addSafeListener("closeAccountModal", "click", closeAccount);
+
+if (accountModal) {
+	accountModal.addEventListener("click", (event) => {
+		if (event.target === accountModal) {
+			closeAccount();
+		}
+	});
+}
+
+addSafeListener("closeCartModal", "click", closeCart);
+
+if (cartModal) {
+	cartModal.addEventListener("click", (event) => {
+		if (event.target === cartModal) {
+			closeCart();
+		}
+	});
+}
+
+addSafeListener("closeOrdersModal", "click", closeOrders);
+
+if (ordersModal) {
+	ordersModal.addEventListener("click", (event) => {
+		if (event.target === ordersModal) {
+			closeOrders();
+		}
+	});
+}
+
+if (profilePhotoInput) {
+	profilePhotoInput.addEventListener("change", () =>
+		updateProfilePhoto(profilePhotoInput.files[0]),
+	);
+}
+
+if (authForm) {
+	authForm.addEventListener("submit", handleAuthLogin);
+}
+
+if (authPhotoInput) {
+	authPhotoInput.addEventListener("change", () =>
+		updateAuthPhoto(authPhotoInput.files[0]),
+	);
+}
+
+if (authName) {
+	authName.addEventListener("input", () =>
+		setPreviewPhoto(authPhotoPreview, pendingAuthPhoto, authName.value),
+	);
+}
+
+addSafeListener("clearCart", "click", () => {
 	cart.clear();
 	renderCart();
 	showToast("Cart cleared");
 });
 
-document.getElementById("orderForm").addEventListener("submit", placeOrder);
-document.getElementById("buyForm").addEventListener("submit", placeBuyNow);
-document.getElementById("closeBuyModal").addEventListener("click", closeBuyNow);
-buyModal.addEventListener("click", (event) => {
-	if (event.target === buyModal) closeBuyNow();
-});
-searchInput.addEventListener("input", renderMenu);
+addSafeListener("orderForm", "submit", placeOrder);
+
+addSafeListener("buyForm", "submit", placeBuyNow);
+
+addSafeListener("closeBuyModal", "click", closeBuyNow);
+
+if (buyModal) {
+	buyModal.addEventListener("click", (event) => {
+		if (event.target === buyModal) {
+			closeBuyNow();
+		}
+	});
+}
+
+if (searchInput) {
+	searchInput.addEventListener("input", renderMenu);
+}
+
 document.querySelectorAll(".service-strip button").forEach((button) => {
 	button.addEventListener("click", () => {
 		if (!button.dataset.target) return;
+
 		document
 			.getElementById(button.dataset.target)
-			.scrollIntoView({ behavior: "smooth", block: "start" });
+			.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
 	});
 });
 
 renderProfile();
 renderCart();
+
 if (profile?.name && profile?.phone) {
 	loadMenu();
 	loadOrders(false);
