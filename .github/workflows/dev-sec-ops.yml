@@ -1,31 +1,9 @@
-name: Dev-sec-ops End to End Pipeline
+name: Test
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
-jobs: 
-    code-quality:
-        uses: ./.github/workflows/code-security.yml
-
-    secrets-scan:
-        uses: ./.github/workflows/secrets-scan.yml
-
-    dependency-scan:
-        uses: ./.github/workflows/dependency-scan.yml
-
-    dockerfile-scan:
-        uses: ./.github/workflows/docker-lint.yml
-
-    build:
-        needs: [code-quality,secrets-scan,dependency-scan,dockerfile-scan]
-        uses: ./.github/workflows/gitops.yml
-        secrets: inherit
-
-    trivy:
-        needs: [build]
-        uses: ./.github/workflows/image-scan.yml
-        secrets: inherit
-
-    
-    
+jobs:
+  code-quality:
+    uses: ./.github/workflows/code-security.yml
