@@ -29,3 +29,14 @@ Thumbs.db
 dist/
 build/
 coverage/
+
+
+
+### VS Code ###
+.vscode/
+
+### Terraform ###
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan

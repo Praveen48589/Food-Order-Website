@@ -27,8 +27,5 @@ jobs:
         uses: ./.github/workflows/image-scan.yml
         secrets: inherit
 
-    deploy:
-        needs: [trivy]
-        uses: ./.github/workflows/deploy-to-server.yml
-        secrets: inherit
+    
     
