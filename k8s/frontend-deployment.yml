@@ -5,6 +5,8 @@ metadata:
   namespace: foodapp
 
 spec:
+  securityContext:
+    runAsNonRoot: true
   replicas: 2
 
   selector:
@@ -39,6 +41,8 @@ spec:
 
       containers:
         - name: frontend
+          securityContext:
+            allowPrivilegeEscalation: false
           image: praveen416/frontend
           imagePullPolicy: IfNotPresent
 
