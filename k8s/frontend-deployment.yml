@@ -18,7 +18,7 @@ spec:
 
     spec:
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false
 
       initContainers:
         - name: wait-for-backend
