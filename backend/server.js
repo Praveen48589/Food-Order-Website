@@ -359,8 +359,7 @@ async function router(req, res) {
 	const url = new URL(req.url, `http://${req.headers.host}`);
 
 	try {
-
-				/* HEALTH CHECK */
+		/* HEALTH CHECK */
 
 		if (req.method === "GET" && url.pathname === "/health") {
 			sendJson(res, 200, {
