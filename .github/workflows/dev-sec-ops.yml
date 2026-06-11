@@ -20,7 +20,7 @@ jobs:
     build:
         needs: [code-quality,secrets-scan,dependency-scan,dockerfile-scan]
         uses: ./.github/workflows/gitops.yml
-        #secrets: inherit
+        secrets: inherit
 
     # trivy:
     #     needs: [build]
