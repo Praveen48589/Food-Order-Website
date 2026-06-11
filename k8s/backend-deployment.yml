@@ -29,7 +29,7 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
 
-          image: praveen416/backend
+          image: praveen416/backend:a655eacd05d0d49a1ee3e8fe715f9abd3a2d7169
           imagePullPolicy: IfNotPresent
 
           ports:
