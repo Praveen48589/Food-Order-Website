@@ -5,8 +5,6 @@ metadata:
   namespace: foodapp
 
 spec:
-  securityContext:
-    runAsNonRoot: true
   replicas: 2
 
   selector:
@@ -19,6 +17,9 @@ spec:
         app: frontend
 
     spec:
+      securityContext:
+        runAsNonRoot: true
+
       initContainers:
         - name: wait-for-backend
           image: busybox:1.28
@@ -41,8 +42,10 @@ spec:
 
       containers:
         - name: frontend
+
           securityContext:
             allowPrivilegeEscalation: false
+
           image: praveen416/frontend
           imagePullPolicy: IfNotPresent
 

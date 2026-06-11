@@ -22,10 +22,13 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+
       containers:
         - name: backend
+
           securityContext:
             allowPrivilegeEscalation: false
+
           image: praveen416/backend
           imagePullPolicy: IfNotPresent
 
