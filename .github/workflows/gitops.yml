@@ -10,7 +10,7 @@ permissions:
 jobs:
     build-push:
         env:
-            DOCKERHUB_USRNAME: ${{vars.DOCKERHUB_USERNAME}}
+            DOCKERHUB_USERNAME: ${{vars.DOCKERHUB_USERNAME}}
             DOCKER_TAG: ${{github.sha}}
         runs-on: ubuntu-latest
         steps:
