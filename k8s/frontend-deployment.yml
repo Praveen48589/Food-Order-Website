@@ -2,20 +2,75 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deployment
-  labels:
-    app: foodapp
+  namespace: foodapp
+
 spec:
   replicas: 2
+
   selector:
     matchLabels:
-      app: foodapp
+      app: frontend
+
   template:
     metadata:
       labels:
-        app: foodapp
+        app: frontend
+
     spec:
+      initContainers:
+        - name: wait-for-backend
+          image: busybox:1.28
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z backend-service 3000; do
+                echo Waiting for backend service...
+                sleep 2
+              done
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+            limits:
+              cpu: "50m"
+              memory: "32Mi"
+
       containers:
-      - name: frontend
-        image: praveen416/frontend
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: praveen416/frontend
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 80
+
+          envFrom:
+            - configMapRef:
+                name: foodapp-config
+            - secretRef:
+                name: foodapp-secret
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3

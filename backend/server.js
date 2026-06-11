@@ -359,6 +359,40 @@ async function router(req, res) {
 	const url = new URL(req.url, `http://${req.headers.host}`);
 
 	try {
+
+				/* HEALTH CHECK */
+
+		if (req.method === "GET" && url.pathname === "/health") {
+			sendJson(res, 200, {
+				status: "UP",
+				service: "food-app-backend",
+				timestamp: new Date().toISOString(),
+			});
+
+			return;
+		}
+
+		/* READINESS CHECK */
+
+		if (req.method === "GET" && url.pathname === "/ready") {
+			if (!mongoReady) {
+				sendJson(res, 503, {
+					status: "NOT_READY",
+					mongoReady: false,
+				});
+
+				return;
+			}
+
+			sendJson(res, 200, {
+				status: "READY",
+				mongoReady: true,
+				timestamp: new Date().toISOString(),
+			});
+
+			return;
+		}
+
 		/* GET MENU */
 
 		if (req.method === "GET" && url.pathname === "/api/menu") {
