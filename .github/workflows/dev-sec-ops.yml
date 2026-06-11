@@ -8,8 +8,8 @@ jobs:
     code-quality:
         uses: ./.github/workflows/code-security.yml
 
-    # secrets-scan:
-    #     uses: ./.github/workflows/secrets-scan.yml
+    secrets-scan:
+        uses: ./.github/workflows/secrets-scan.yml
 
     # dependency-scan:
     #     uses: ./.github/workflows/dependency-scan.yml
