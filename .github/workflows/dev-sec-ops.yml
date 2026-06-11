@@ -17,10 +17,10 @@ jobs:
     dockerfile-scan:
         uses: ./.github/workflows/docker-lint.yml
 
-    # build:
-    #     needs: [code-quality,secrets-scan,dependency-scan,dockerfile-scan]
-    #     uses: ./.github/workflows/gitops.yml
-    #     secrets: inherit
+    build:
+        needs: [code-quality,secrets-scan,dependency-scan,dockerfile-scan]
+        uses: ./.github/workflows/gitops.yml
+        secrets: inherit
 
     # trivy:
     #     needs: [build]
