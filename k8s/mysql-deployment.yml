@@ -15,7 +15,7 @@ spec:
         app: mysql
     spec:
       securityContext:
-        runAsNonRoot: false
+        runAsNonRoot: true
       containers:
         - name: mysql
           securityContext:
