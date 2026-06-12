@@ -17,9 +17,6 @@ spec:
         app: frontend
 
     spec:
-      securityContext:
-        runAsNonRoot: false
-
       initContainers:
         - name: wait-for-backend
           image: busybox:1.28
@@ -42,10 +39,6 @@ spec:
 
       containers:
         - name: frontend
-
-          securityContext:
-            allowPrivilegeEscalation: false
-
           image: praveen416/frontend:4495ef6e47348ceecdf8e56e8c505516117efa7f
           imagePullPolicy: IfNotPresent
 
