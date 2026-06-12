@@ -1,39 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mongodb-deployment
   namespace: foodapp
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: mongodb
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: mongodb
     spec:
-      securityContext:
-        runAsNonRoot: true
       containers:
-        - name: mysql
-          securityContext:
-            allowPrivilegeEscalation: false
-          image: mysql:8.0
+        - name: mongodb
+          image: mongo:7
           ports:
-            - containerPort: 3306
+            - containerPort: 27017
           env:
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MONGODB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: foodapp-secret
-                  key: MYSQL_ROOT_PASSWORD
-            - name: MYSQL_DATABASE
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: MONGODB_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: foodapp-config
-                  key: MYSQL_DATABASE
+                  key: MONGODB_DATABASE
           resources:
             requests:
               memory: "256Mi"
@@ -42,20 +38,27 @@ spec:
               memory: "512Mi"
               cpu: "500m"
           volumeMounts:
-            - name: mysql-storage
-              mountPath: /var/lib/mysql
+            - name: mongodb-storage
+              mountPath: /data/db
           readinessProbe:
             exec:
-              command: ["mysqladmin", "ping", "-h", "localhost"]
-            initialDelaySeconds: 15
-            failureThreshold: 10
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+              initialDelaySeconds: 15
+              periodSeconds: 10
+              failureThreshold: 5
           livenessProbe:
             exec:
-              command: ["mysqladmin", "ping", "-h", "localhost"]
-            initialDelaySeconds: 30
-            periodSeconds: 10
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+              initialDelaySeconds: 30
+              periodSeconds: 10
             failureThreshold: 5
       volumes:
-        - name: mysql-storage
+        - name: mongodb-storage
           persistentVolumeClaim:
-            claimName: mysql-pvc
+            claimName: mongodb-pvc

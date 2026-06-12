@@ -4,6 +4,6 @@ metadata:
   name: foodapp-config
   namespace: foodapp
 data:
-  DATABASE_HOST: mysql-service
-  DATABASE_PORT: "3306"
-  MYSQL_DATABASE: foodappdb
+  DATABASE_HOST: mongodb-service
+  DATABASE_PORT: "27017"
+  MONGODB_DATABASE: mydatabase
