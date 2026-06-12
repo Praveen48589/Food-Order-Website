@@ -20,23 +20,23 @@ spec:
           ports:
             - containerPort: 27017
           env:
-            - name: MONGODB_ROOT_PASSWORD
+            - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: foodapp-secret
                   key: MONGO_INITDB_ROOT_PASSWORD
-            - name: MONGODB_DATABASE
+            - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
-                configMapKeyRef:
-                  name: foodapp-config
-                  key: MONGODB_DATABASE
+                secretKeyRef:
+                  name: foodapp-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
           resources:
             requests:
-              memory: "256Mi"
+              memory: "512Mi"
               cpu: "250m"
             limits:
-              memory: "512Mi"
-              cpu: "500m"
+              memory: "1Gi"
+              cpu: "1000m"
           volumeMounts:
             - name: mongodb-storage
               mountPath: /data/db
@@ -46,17 +46,19 @@ spec:
                 - mongosh
                 - --eval
                 - "db.adminCommand('ping')"
-              initialDelaySeconds: 15
-              periodSeconds: 10
-              failureThreshold: 5
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
           livenessProbe:
             exec:
               command:
                 - mongosh
                 - --eval
                 - "db.adminCommand('ping')"
-              initialDelaySeconds: 30
-              periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 10
             failureThreshold: 5
       volumes:
         - name: mongodb-storage

@@ -4,9 +4,12 @@ metadata:
   name: mongodb-pvc
   namespace: foodapp
 spec:
-  storageClassName: gp3
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
+  selector:
+    matchLabels:
+      app: mongodb
