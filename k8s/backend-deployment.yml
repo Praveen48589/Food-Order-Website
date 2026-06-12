@@ -22,7 +22,15 @@ spec:
     spec:
       containers:
         - name: backend
+<<<<<<< HEAD
           image: praveen416/backend:a655eacd05d0d49a1ee3e8fe715f9abd3a2d7169
+=======
+
+          securityContext:
+            allowPrivilegeEscalation: false
+
+          image: praveen416/backend:4495ef6e47348ceecdf8e56e8c505516117efa7f
+>>>>>>> c637ceda0a5697333aef3226e8cd30d8106a611f
           imagePullPolicy: IfNotPresent
 
           ports:
