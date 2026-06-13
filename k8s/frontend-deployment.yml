@@ -24,7 +24,7 @@ spec:
             - sh
             - -c
             - |
-              until nc -z backend-service 3000; do
+              until nc -z backend 3000; do
                 echo Waiting for backend service...
                 sleep 2
               done
