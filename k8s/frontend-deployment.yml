@@ -39,7 +39,7 @@ spec:
 
       containers:
         - name: frontend
-          image: praveen416/frontend:61acd8035fdc97237bca11faac90f2b49dde6604
+          image: praveen416/frontend:9c9cab843cd430eb4ca87c4b857806a592a081e8
           imagePullPolicy: IfNotPresent
 
           ports:
