@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: praveen416/backend:cf101cd6c5e603c6dae772e1feff51af871b44f7
+          image: praveen416/backend:61df78b7afd076c7178fdf13439844275e217239
           imagePullPolicy: IfNotPresent
 
           ports:
