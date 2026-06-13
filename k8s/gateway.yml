@@ -31,7 +31,7 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: 13.232.61.74.nip.io
+      hostname: 13.235.178.222.nip.io
       tls:
         mode: Terminate
         certificateRefs:
@@ -49,7 +49,7 @@ metadata:
   namespace: foodapp
 spec:
   hostnames:
-    - 13.232.61.74.nip.io
+    - 13.235.178.222.nip.io
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
